@@ -1,20 +1,18 @@
 import styled from "styled-components";
-
-export default function BoxPost() {
+import { Post } from "../protocols/postsProtocol";
+interface BoxPostProps {
+  post: Post;
+}
+export default function BoxPost({ post }: BoxPostProps) {
   return (
     <ContainerPost>
-        <div className="imagem"></div>
-      <img src="" alt="" />
+      <img src={post.image} alt="" />
       <PostBody>
-        <PostHeader>
-          <h1>Post Title - Author1</h1>
-        </PostHeader>
-        <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae adipisci fugit praesentium tempore eaque. Molestias nihil et laboriosam, quibusdam earum sint. Tempore corporis explicabo ut corrupti est rem autem ipsam.</span>
-        <PostInfo>
-          <h2>Category |</h2>
-          <h2>Tag</h2>
-          <h2>Tag</h2>
-        </PostInfo>
+        <h1>{post.title} | @{post.user.userName}</h1>
+        <span>{post.description}</span>
+        <h2>
+          {post.category?.name} | #{post.tag?.name}
+        </h2>
       </PostBody>
     </ContainerPost>
   );
@@ -23,16 +21,29 @@ export default function BoxPost() {
 const ContainerPost = styled.div`
   display: flex;
   margin-bottom: 10px;
-  .imagem{
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  position: relative;
+  img {
     width: 180px;
     height: 120px;
     background-color: black;
-    
   }
-  span{
+  h1 {
+    font-size: 25px;
+    margin-bottom: 5px;
+    color: #831515;
+  }
+  h2 {
+    margin-top: 5px;
+    font-size: 15px;
+    position: absolute;
+    bottom: 8px;
+    color: #831515;
+  }
+  span {
     display: flex;
-    flex-wrap: wrap;
-    width: 50%;
+    font-size: 18px;
+    margin-top: 3px;
   }
 `;
 
@@ -41,11 +52,4 @@ const PostBody = styled.div`
   flex-direction: column;
   box-sizing: border-box;
   padding: 12px;
-  
 `;
-
-const PostInfo = styled.div`
-    display: flex;
-`
-    
-const PostHeader = styled.div``;

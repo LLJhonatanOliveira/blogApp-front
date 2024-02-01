@@ -6,7 +6,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { Link, useLocation } from "react-router-dom";
+import { Link} from "react-router-dom";
 import styled from "styled-components";
 interface InputForm {
   firstName: string;
@@ -37,6 +37,8 @@ export default function SignUp() {
     const promise = axios.post('/auth/sign-up', data)
     promise.then((res) => {
       console.log(res.data)
+      alert("Account created");
+      
     })
     .catch((error) => {
       console.log(error.message)

@@ -1,18 +1,19 @@
-import { Box, InputAdornment, TextField } from "@mui/material"
+import {InputAdornment, TextField } from "@mui/material"
 import SearchIcon from "@mui/icons-material/Search";
 import { DebounceInput } from "debounce-input-react";
 import { ChangeEvent, useState } from "react";
 import { useRecoilState } from "recoil";
-import { filter } from "../atom/postAtom";
+import { filter, page } from "../atom/postAtom";
 
 export default function SearchBar(){
     const [complete, setComplete] = useState(false);
     const [filterData, setFilterData] = useRecoilState(filter);
+    const [pageNumber, setPageNumber] = useRecoilState(page);
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setPageNumber(1)
         setFilterData(e.target.value);
       };
     return(
-        <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
         <DebounceInput
             placeholder="Search"
             onFocus={() => { setComplete(true) }}
@@ -21,7 +22,6 @@ export default function SearchBar(){
             element={TextField}
             debounceTimeout = { 300 } 
             value={filterData}
-            
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -30,6 +30,7 @@ export default function SearchBar(){
               ),
             }}
             onInput={ handleChange}/>
-      </Box>
+     
     )
 }
+

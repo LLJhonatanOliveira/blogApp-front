@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-interface UserData{
+export interface UserData{
     userName: string;
     token: string;
 }
