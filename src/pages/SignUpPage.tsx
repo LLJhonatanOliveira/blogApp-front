@@ -52,19 +52,19 @@ export default function SignUp() {
           <Controller
             name="firstName"
             control={control}
-            render={({ field }) => <TextField {...field} label="firstName" />}
+            render={({ field }) => <TextField {...field} label="First Name" />}
           />
           <Controller
             name="lastName"
             control={control}
-            render={({ field }) => <TextField {...field} label="lastName" />}
+            render={({ field }) => <TextField {...field} label="Last Name" />}
           />
         </div>
         <div>
           <Controller
             name="userName"
             control={control}
-            render={({ field }) => <TextField {...field} label="userName" />}
+            render={({ field }) => <TextField {...field} label="Username" />}
           />
         </div>
         <div>
@@ -98,7 +98,7 @@ export default function SignUp() {
             name="password"
             control={control}
             render={({ field }) => (
-              <TextField type="password" label="password" {...field} />
+              <TextField type="password" label="Password" {...field} />
             )}
           />
         </div>

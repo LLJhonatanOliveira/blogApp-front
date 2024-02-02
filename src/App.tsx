@@ -14,10 +14,14 @@ import AllPosts from "./pages/AllPostsPage";
 import MyPosts from "./pages/MyPostsPage";
 import UserContext, { UserProvider } from "./context/userContext";
 import NewPost from "./pages/NewPostPage";
+import EditPost from "./pages/EditPostPage";
+import TagsPage from "./pages/TagsPage";
+import CategoriesPage from "./pages/CategoriesPage";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 
 function App() {
+
   return (
     <>
       <UserProvider>
@@ -36,10 +40,34 @@ function App() {
                 }
               />
               <Route
+                path="/posts/:postId"
+                element={
+                  <ProtectedRouterGuard>
+                    <EditPost />
+                  </ProtectedRouterGuard>
+                }
+              />
+              <Route
                 path="/new-post"
                 element={
                   <ProtectedRouterGuard>
                     <NewPost />
+                  </ProtectedRouterGuard>
+                }
+              />
+              <Route
+                path="/tags"
+                element={
+                  <ProtectedRouterGuard>
+                    <TagsPage />
+                  </ProtectedRouterGuard>
+                }
+              />
+                <Route
+                path="/categories"
+                element={
+                  <ProtectedRouterGuard>
+                    <CategoriesPage />
                   </ProtectedRouterGuard>
                 }
               />

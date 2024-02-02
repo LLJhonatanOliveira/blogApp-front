@@ -44,7 +44,7 @@ export default function SignIn() {
           <Controller
             name="userName"
             control={control}
-            render={({ field }) => <TextField {...field} label="userName" />}
+            render={({ field }) => <TextField {...field} label="Username" />}
           />
         </div>
         <div>
@@ -52,7 +52,7 @@ export default function SignIn() {
             name="password"
             control={control}
             render={({ field }) => (
-              <TextField type="password" label="password" {...field} />
+              <TextField type="password" label="Password" {...field} />
             )}
           />
         </div>

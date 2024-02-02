@@ -1,38 +1,36 @@
 import { Button,Stack, TextField } from "@mui/material";
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import UserContext from "../context/userContext";
 import { mutate } from "swr";
 import { useRecoilState} from "recoil";
-import { valueState } from "../atom/postAtom";
+import { postState, valueState } from "../atom/postAtom";
+import useMyPosts from "../hooks/useMyPosts";
 interface InputForm {
-  image: string;
   title: string;
   description: string;
-  category?: string;
-  tag?: string;
 }
 
-export default function NewPost() {
+export default function EditPost() {
+  const {postId} = useParams()
   const navigate = useNavigate();
   const [value, setValue] = useRecoilState(valueState)
   const {userData} = useContext(UserContext)
+  const { fetchedMyPosts} = useMyPosts();
+  const [post, setPost] = useRecoilState(postState)
   const { control, handleSubmit } = useForm({
     defaultValues: {
-      image: "",
-      title: "",
-      description: "",
-      category: "",
-      tag: "",
+      title: post.title,
+      description: post.description,
     },
   });
 
+  
   const onSubmit: SubmitHandler<InputForm> = (data) => {
-    console.log(data)
-    const promise = axios.post("/create-post",data, {
+    const promise = axios.patch(`/update-post/${postId}`,data, {
         headers: {
           Authorization: `Bearer ${userData.token}`,
         },
@@ -40,41 +38,25 @@ export default function NewPost() {
     promise
       .then((res) => {
         console.log(res.data);
-        setValue(0)
-        alert("Post Created");
+        setValue(1)
+        alert("Post Edited");
         mutate(`/get-posts?page=1&filter=`)
-        navigate('/posts')
+        navigate('/posts/user')
       })
       .catch((error) => {
         console.log(error);
       });
   };
   return (
-    <ContainerSignUP>
+    <ContainerEditPost>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <h1>New Post</h1>
-          <Controller
-            name="image"
-            control={control}
-            render={({ field }) => <TextField {...field} label="URL image" />}
-          />
+        <h1>Edit Post</h1>
+        <img src={post.image} alt="" />
           <Controller
             name="title"
             control={control}
-            render={({ field }) => <TextField {...field} label="title" />}
+            render={({ field }) => <TextField {...field}  label="title" />}
           />
-        <div>
-          <Controller
-            name="category"
-            control={control}
-            render={({ field }) => <TextField label="category" {...field} />}
-          />
-          <Controller
-            name="tag"
-            control={control}
-            render={({ field }) => <TextField label="tag" {...field} />}
-          />
-        </div>
         <div>
           <Controller
             name="description"
@@ -84,22 +66,28 @@ export default function NewPost() {
         </div>
         <Stack direction="row" spacing={2}>
           <Button sx={{ width: "30px" }} type="submit">
-            Create
+            Edit
           </Button>
-          <Button sx={{ width: "30px" }} color="error" onClick={() => navigate("/posts")}>
+          <Button sx={{ width: "30px" }} color="error" onClick={() => navigate("/posts/user")}>
             Cancel
           </Button>
         </Stack>
       </form>
-    </ContainerSignUP>
+    </ContainerEditPost>
   );
 }
 
-const ContainerSignUP = styled.div`
+const ContainerEditPost = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  img {
+    margin-bottom: 15px;
+    width: 180px;
+    height: 120px;
+    background-color: black;
+  }
   form {
     display: flex;
     flex-direction: column;

@@ -32,7 +32,7 @@ export default function MyPosts() {
             <Button
               sx={{
                 position: "fixed",
-                right: "50px",
+                right: "2%",
                 backgroundColor: "black",
               }}
               variant="contained"
@@ -47,7 +47,7 @@ export default function MyPosts() {
             <Button
               sx={{
                 position: "fixed",
-                right: "300px",
+                right: "18%",
                 backgroundColor: "black",
               }}
               variant="contained"
