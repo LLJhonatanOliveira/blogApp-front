@@ -22,7 +22,6 @@ export interface User {
     userName: string;
 }
 
-
 export interface FetchedPosts extends Post {
     data: Post[],
     pagination: {

@@ -13,7 +13,6 @@ interface UserContextType {
 
 const UserContext = createContext<UserContextType>({ userData: { userName: '', token: '' }, setUserData: () => {} });
 
-
 export default UserContext;
 
 export function UserProvider({ children }: { children: ReactNode }) {
